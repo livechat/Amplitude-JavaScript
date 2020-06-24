@@ -664,9 +664,9 @@
     for (var _i = 0; _i < levels.length; ++_i) {
       var cname = '__tld_test__';
       var domain = levels[_i];
-      var opts = {
+      var opts = Object.assign({
         domain: '.' + domain
-      };
+      }, _options);
       baseCookie.set(cname, 1, opts);
 
       if (baseCookie.get(cname)) {
@@ -684,9 +684,9 @@
     }
 
     opts = opts || {};
-    _options.expirationDays = opts.expirationDays;
-    _options.secure = opts.secure;
     _options.sameSite = opts.sameSite;
+    _options.secure = opts.secure;
+    _options.expirationDays = _options.expirationDays || opts.expirationDays;
     var domain = !utils.isEmptyString(opts.domain) ? opts.domain : '.' + topDomain(getLocation().href);
     var token = Math.random();
     _options.domain = domain;
@@ -3218,7 +3218,7 @@
     );
   };
 
-  var version = "5.12.2";
+  var version = "5.12.4";
 
   var getLanguage = function getLanguage() {
     return navigator && (navigator.languages && navigator.languages[0] || navigator.language || navigator.userLanguage) || undefined;
@@ -5133,9 +5133,10 @@
      * @example amplitude.init('API_KEY', 'USER_ID', {includeReferrer: true, includeUtm: true}, function() { alert('init complete'); });
      */
     Amplitude.prototype.init = function init(apiKey, opt_userId, opt_config, opt_callback) {
+      var cookieConfig = Object.assign({}, opt_config, DEFAULT_OPTIONS);
       Cookie.options({
-        secure: opt_config.secureCookie || DEFAULT_OPTIONS.secureCookie,
-        sameSite: opt_config.sameSiteCookie || DEFAULT_OPTIONS.sameSiteCookie
+        secure: cookieConfig.secureCookie,
+        sameSite: cookieConfig.sameSiteCookie
       });
       this.getInstance().init(apiKey, opt_userId, opt_config, function (instance) {
         // make options such as deviceId available for callback functions

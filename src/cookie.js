@@ -48,7 +48,7 @@ const topDomain = (url) => {
   for (let i = 0; i < levels.length; ++i) {
     const cname = '__tld_test__';
     const domain = levels[i];
-    const opts = { domain: '.' + domain };
+    const opts = Object.assign({ domain: '.' + domain }, _options);
 
     baseCookie.set(cname, 1, opts);
     if (baseCookie.get(cname)) {
@@ -68,9 +68,9 @@ var options = function(opts) {
 
   opts = opts || {};
 
-  _options.expirationDays = opts.expirationDays;
-  _options.secure = opts.secure;
   _options.sameSite = opts.sameSite;
+  _options.secure = opts.secure;
+  _options.expirationDays = _options.expirationDays || opts.expirationDays;
 
   var domain = (!utils.isEmptyString(opts.domain)) ? opts.domain : '.' + topDomain(getLocation().href);
   var token = Math.random();
