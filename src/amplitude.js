@@ -73,7 +73,7 @@ if (BUILD_COMPAT_2_0) {
    * @example amplitude.init('API_KEY', 'USER_ID', {includeReferrer: true, includeUtm: true}, function() { alert('init complete'); });
    */
   Amplitude.prototype.init = function init(apiKey, opt_userId, opt_config, opt_callback) {
-    const cookieConfig = Object.assign({}, opt_config, DEFAULT_OPTIONS);
+    const cookieConfig = Object.assign({}, DEFAULT_OPTIONS, opt_config);
     Cookie.options({
       secure: cookieConfig.secureCookie,
       sameSite: cookieConfig.sameSiteCookie

@@ -3218,7 +3218,7 @@
     );
   };
 
-  var version = "5.12.4";
+  var version = "5.12.5";
 
   var getLanguage = function getLanguage() {
     return navigator && (navigator.languages && navigator.languages[0] || navigator.language || navigator.userLanguage) || undefined;
@@ -5133,7 +5133,7 @@
      * @example amplitude.init('API_KEY', 'USER_ID', {includeReferrer: true, includeUtm: true}, function() { alert('init complete'); });
      */
     Amplitude.prototype.init = function init(apiKey, opt_userId, opt_config, opt_callback) {
-      var cookieConfig = Object.assign({}, opt_config, DEFAULT_OPTIONS);
+      var cookieConfig = Object.assign({}, DEFAULT_OPTIONS, opt_config);
       Cookie.options({
         secure: cookieConfig.secureCookie,
         sameSite: cookieConfig.sameSiteCookie
